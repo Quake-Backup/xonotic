@@ -329,6 +329,18 @@ build_libode ()
 	make install
 }
 
+build_libxmp()
+{
+	fetch_source libxmp || true
+
+	mkcd "$work_dir/libxmp"
+	cmake_cross "$this_src" \
+		-DBUILD_SHARED=ON \
+		-DBUILD_STATIC=OFF
+	make
+	make install
+}
+
 build_all ()
 {
 #	build_zlib
@@ -343,6 +355,7 @@ build_all ()
 #	build_libode
 #	build_libcurl
 	build_libsdl2
+	build_libxmp
 }
 
 fix_install_names ()
@@ -435,6 +448,7 @@ list ()
 	echo libode
 	echo libcurl
 	echo libsdl2
+	echo libxmp
 }
 
 usage ()
@@ -476,6 +490,7 @@ case $step in
 	libode)     prepare ; build_libode ;;
 	libcurl)    prepare ; build_libcurl ;;
 	libsdl2)    prepare ; build_libsdl2 ;;
+	libxmp)     prepare ; build_libxmp ;;
 	build_all)  prepare ; build_all ;;
 	install)    prepare ; install ;;
 	all)        prepare ; build_all ; install ;;

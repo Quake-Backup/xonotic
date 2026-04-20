@@ -301,6 +301,18 @@ build_libsdl2 ()
 	make install
 }
 
+build_libxmp()
+{
+	fetch_source libxmp || true
+
+	mkcd "$work_dir/libxmp"
+	cmake_cross "$this_src" \
+		-DBUILD_SHARED=ON \
+		-DBUILD_STATIC=OFF
+	make
+	make install
+}
+
 build_all ()
 {
 	build_zlib
@@ -314,6 +326,7 @@ build_all ()
 	build_libjpeg
 	build_curl
 	build_libsdl2
+	build_libxmp
 }
 
 install ()
@@ -334,6 +347,7 @@ install ()
 	cp -v "$pkg_dir/bin/libjpeg-62.dll" "$out_dir/libjpeg.dll"
 	cp -v "$pkg_dir/bin/libcurl.dll" "$out_dir/libcurl-4.dll"
 #	cp -v "$pkg_dir/bin/SDL2.dll" "$out_dir"
+	cp -v "$pkg_dir/bin/libxmp.dll" "$out_dir"
 
 	# Required for win32 builds
 	if [ "$ARCH" = "i686" ]; then
@@ -367,6 +381,7 @@ list ()
 	echo libjpeg
 	echo curl
 	echo libsdl2
+	echo libxmp
 }
 
 usage ()
@@ -407,6 +422,7 @@ case $step in
 	libjpeg)       prepare ; build_libjpeg ;;
 	curl)          prepare ; build_curl ;;
 	libsdl2)       prepare ; build_libsdl2 ;;
+	libxmp)        prepare ; build_libxmp ;;
 	build_all)     prepare ; build_all ;;
 	install)       prepare ; install ;;
 	all)           prepare ; build_all ; install ;;
