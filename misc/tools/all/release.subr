@@ -245,7 +245,7 @@ case "$cmd" in
 		darkplaces_maketargets=$3
 		darkplaces_files=$4
 		host=xonotic-build-$suffix
-		verbose "$SELF" release-compile-run "$host" /tmp/Darkplaces.build."$suffix" "$darkplaces_maketargets" "$makeflags" "Xonotic/source/darkplaces" "$d0/misc/builddeps/$suffix" "$darkplaces_files"
+		verbose "$SELF" release-compile-run "$host" /tmp/Darkplaces."$HOME"."$suffix" "$darkplaces_maketargets" "$makeflags" "Xonotic/source/darkplaces" "$d0/misc/builddeps/$suffix" "$darkplaces_files"
 		;;
 	release-getbinary)
 		release_common
@@ -290,28 +290,28 @@ case "$cmd" in
 		arch=$1
 		buildpath=$2
 		targetdir=$3
-		verbose "$d0"/misc/buildsrc/dlls.sh all "$buildpath" "$arch"
+		verbose "$d0"/misc/infrastructure/dlls.sh all "$buildpath" "$arch"
 		verbose mkdir -p "$d0/misc/builddeps/$arch"
 		verbose ln -sf "$buildpath/pkg/$arch" "$d0/misc/builddeps/$arch/all"
 		verbose cp -r --preserve=timestamps -v "$buildpath/out/$arch" "$targetdir"
 		;;
 	release-libs-windows)
 		release_common
-		buildpath=/tmp/dlls
-		verbose "$d0"/misc/buildsrc/dlls.sh clean "$buildpath"
+		buildpath=/tmp/dlls.$HOME
+		verbose "$d0"/misc/infrastructure/dlls.sh clean "$buildpath"
 		verbose "$SELF" release-dlls-compile win32 "$buildpath" Xonotic/bin32
 		verbose "$SELF" release-dlls-compile win64 "$buildpath" Xonotic/bin64
 		;;
 	release-libs-macos)
 		release_common
-		buildpath=/tmp/dylibs
-		verbose "$d0"/misc/buildsrc/dylibs-osx.sh clean "$buildpath"
+		buildpath=/tmp/dylibs.$HOME
+		verbose "$d0"/misc/infrastructure/dylibs.sh clean "$buildpath"
 		for machine in macos-x86_64 macos-arm64; do
-			verbose "$d0"/misc/buildsrc/dylibs-osx.sh all "$buildpath" $machine
+			verbose "$d0"/misc/infrastructure/dylibs.sh all "$buildpath" $machine
 			verbose mkdir -p "$d0/misc/builddeps/$machine"
 			verbose ln -sf "$buildpath/pkg/$machine" "$d0/misc/builddeps/$machine/all"
 		done
-		verbose "$d0"/misc/buildsrc/dylibs-osx.sh universal "$buildpath"
+		verbose "$d0"/misc/infrastructure/dylibs.sh universal "$buildpath"
 		verbose mkdir -p Xonotic/Xonotic.app/Contents/MacOS
 		verbose cp -rdv --preserve=timestamps "$buildpath"/out/universal/* Xonotic/Xonotic.app/Contents/MacOS/
 		;;
