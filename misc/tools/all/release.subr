@@ -245,7 +245,7 @@ case "$cmd" in
 		darkplaces_maketargets=$3
 		darkplaces_files=$4
 		host=xonotic-build-$suffix
-		verbose "$SELF" release-compile-run "$host" /tmp/Darkplaces."$HOME"."$suffix" "$darkplaces_maketargets" "$makeflags" "Xonotic/source/darkplaces" "$d0/misc/builddeps/$suffix" "$darkplaces_files"
+		verbose "$SELF" release-compile-run "$host" /tmp/Darkplaces."$LOGNAME"."$suffix" "$darkplaces_maketargets" "$makeflags" "Xonotic/source/darkplaces" "$d0/misc/builddeps/$suffix" "$darkplaces_files"
 		;;
 	release-getbinary)
 		release_common
@@ -297,14 +297,14 @@ case "$cmd" in
 		;;
 	release-libs-windows)
 		release_common
-		buildpath=/tmp/dlls.$HOME
+		buildpath=/tmp/dlls.$LOGNAME
 		verbose "$d0"/misc/infrastructure/dlls.sh clean "$buildpath"
 		verbose "$SELF" release-dlls-compile win32 "$buildpath" Xonotic/bin32
 		verbose "$SELF" release-dlls-compile win64 "$buildpath" Xonotic/bin64
 		;;
 	release-libs-macos)
 		release_common
-		buildpath=/tmp/dylibs.$HOME
+		buildpath=/tmp/dylibs.$LOGNAME
 		verbose "$d0"/misc/infrastructure/dylibs.sh clean "$buildpath"
 		for machine in macos-x86_64 macos-arm64; do
 			verbose "$d0"/misc/infrastructure/dylibs.sh all "$buildpath" $machine
