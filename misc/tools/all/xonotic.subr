@@ -309,12 +309,12 @@ case "$cmd" in
 		# TODO(rpolzer): Why does :anticheat: output differ? Total game time differs? Why?
 		trap "rm -rf .serverbench_temp" EXIT HUP INT QUIT SEGV PIPE TERM
 		mkdir -p .serverbench_temp
-		verbose "$SELF" run dedicated "$@" -noconfig -userdir .serverbench_temp +exec serverbench.cfg |\
-			tee /dev/stderr |\
-			grep '^:' |\
-			grep -v '^:gamestart:' |\
-			grep -v '^:anticheat:' |\
-			md5sum
+		verbose "$SELF" run dedicated "$@" -noconfig -userdir .serverbench_temp +sys_stdout_blocks 1 +exec serverbench.cfg \
+			| tee /dev/stderr \
+			| grep '^:' \
+			| grep -v '^:gamestart:' \
+			| grep -v '^:anticheat:' \
+			| sha512sum | awk '{ print $1 }'
 		;;
 	*)
 		handled=false
