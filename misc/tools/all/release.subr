@@ -650,8 +650,6 @@ case "$cmd" in
 		release_common
 		# make sure everything we need is installed and updated
 		verbose "$d0"/misc/tools/msys2-linux.sh --schroot=sid rsync dash openssl sed
-		# work around https://gitlab.com/xonotic/xonotic/-/work_items/394
-		verbose schroot -c sid -- fakeroot pacman --sysroot "$HOME/msys64" --noconfirm -U https://repo.msys2.org/msys/x86_64/openssl-3.6.1-1-x86_64.pkg.tar.zst
 		targetroot="$PWD/Xonotic"
 		verbose cd "$HOME/msys64" # see msys2-linux.sh
 		verbose cp --parents --preserve=timestamps \

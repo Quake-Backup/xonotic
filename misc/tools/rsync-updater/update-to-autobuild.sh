@@ -94,22 +94,18 @@ if [ -n "$XONOTIC_INCLUDE_ALL" ]; then
 	: noot noot
 elif [ "$OS" = "Windows_NT" ]; then
 	excludes="$excludes --exclude=/xonotic-linux*"
-	excludes="$excludes --exclude=/xonotic-osx-*"
+	excludes="$excludes --exclude=/xonotic-macos-*"
 	excludes="$excludes --exclude=/Xonotic*.app"
-	excludes="$excludes --exclude=/gmqcc/gmqcc.linux*"
-	excludes="$excludes --exclude=/gmqcc/gmqcc.osx"
 
 	if [ "$PROCESSOR_ARCHITECTURE" = AMD64 ]; then
 		if [ -z "$XONOTIC_INCLUDE_32BIT" ]; then
 		excludes="$excludes --exclude=/xonotic-x86.exe"
 		excludes="$excludes --exclude=/xonotic-x86-dedicated.exe"
-		excludes="$excludes --exclude=/xonotic-x86-wgl.exe"
 		excludes="$excludes --exclude=/bin32"
 		fi
 	else
 		excludes="$excludes --exclude=/xonotic.exe"
 		excludes="$excludes --exclude=/xonotic-dedicated.exe"
-		excludes="$excludes --exclude=/xonotic-wgl.exe"
 		excludes="$excludes --exclude=/bin64"
 	fi
 else
@@ -124,7 +120,7 @@ else
 			;;
 		Linux:x86_64)
 			excludes="$excludes --exclude=/Xonotic*.app"
-			excludes="$excludes --exclude=/xonotic-osx-*"
+			excludes="$excludes --exclude=/xonotic-macos-*"
 			;;
 		*)
 			printf >&2 "\033[1;31m"
@@ -133,7 +129,7 @@ else
 			printf >&2 "WARNING: Please run make. More info is available at\n"
 			printf >&2 "WARNING: \033[1;36mhttps://gitlab.com/xonotic/xonotic/-/wikis/Compiling\033[m\n"
 			excludes="$excludes --exclude=/Xonotic*.app"
-			excludes="$excludes --exclude=/xonotic-osx-*"
+			excludes="$excludes --exclude=/xonotic-macos-*"
 			excludes="$excludes --exclude=/xonotic-linux64-*"
 			;;
 	esac
